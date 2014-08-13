@@ -3,6 +3,7 @@ package com.kirillmangutov.dreameater;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -47,7 +48,7 @@ public class WriteActivity extends Activity {
         Dream dream = Dream.get(date_string);
 
         if(dream == null) {
-            dream = new Dream();
+            dream = new Dream(date_string);
         }
 
         return dream;

@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by kirillmangutov on 7/5/14.
@@ -27,11 +28,15 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         super(context, R.layout.dream_item);
 
         dreams = Dream.getAll();
+
+        //for(int i = 1; i < 20; i++)
+        //    dreams.add(0, getToday(20 - i));
+
+
         if(!hasToday()) {
             dreams.add(0, getToday());
         }
 
-        //dreams.add(0, getToday());
 
         addAll(dreams);
     }
@@ -48,8 +53,13 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
     }
 
     private Dream getToday() {
+        return getToday(0);
+    }
+
+    private Dream getToday(int deltaDay) {
         Dream today = new Dream();
         today.date = new Date();
+        today.date.setDate(today.date.getDate() - deltaDay);
         today.contents = "";
         today.date_string = today.readableDate();
         return today;
@@ -58,9 +68,10 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
     public static int grayDelta(int index) {
 
         int mod = 16;
-        int amt = index * mod;
+        int amt = (4 + index) * mod;
         return Color.rgb(240 - amt, 240 - amt, 240 - amt);
     }
+
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -80,9 +91,15 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         textView.setText(current.readableDate());
 
         TextView shortDesc = (TextView) convertView.findViewById(R.id.textViewDesc);
-        shortDesc.setText(current.shortDesc(10));
+        shortDesc.setText(current.shortDesc(30));
 
-        convertView.setBackgroundColor(grayDelta(5));
+        int clampedOffset = (int) (Math.sin(Math.toRadians(position * 30)) * 4);
+        int opposite = (int) (Math.sin(Math.toRadians(position * 30)) * 4) + 6;
+
+        Log.d("offset", "pos:" + position + " clampedOffset:" + clampedOffset);
+
+        convertView.setBackgroundColor(grayDelta(clampedOffset));
+        textView.setTextColor(grayDelta(opposite));
 
         return convertView;
     }

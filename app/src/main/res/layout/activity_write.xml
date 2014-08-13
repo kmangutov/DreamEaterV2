@@ -18,7 +18,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textViewTitle" />
+        android:layout_below="@+id/textViewTitle"
+        style="@style/DreamText.Title"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,5 +28,6 @@
         android:text="Large Text"
         android:id="@+id/textViewTitle"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/editTextContents" />
+        android:layout_alignRight="@+id/editTextContents"
+        style="@style/DreamText"/>
 </RelativeLayout>

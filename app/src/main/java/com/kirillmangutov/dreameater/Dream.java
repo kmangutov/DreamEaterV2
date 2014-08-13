@@ -18,6 +18,8 @@ import java.util.List;
 public class Dream extends Model implements Serializable {
 
 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM dd yyyy");
+
     @Column(name = "date_string")
     public String date_string;
 
@@ -36,11 +38,21 @@ public class Dream extends Model implements Serializable {
         date_string = readableDate();
     }
 
+    public Dream(String date_string) {
+
+        super();
+
+        try {
+            contents = "";
+            date = dateFormat.parse(date_string);
+            this.date_string = date_string;
+        }catch(Exception e){}
+    }
+
 
     public String readableDate() {
 
         //MM = month, mm = minute
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         return dateFormat.format(date);
     }
 
