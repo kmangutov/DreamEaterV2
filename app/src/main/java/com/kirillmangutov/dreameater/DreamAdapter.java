@@ -67,9 +67,10 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
 
     public static int grayDelta(int index) {
 
-        int mod = 16;
+        int mod = 8;
         int amt = (4 + index) * mod;
-        return Color.rgb(240 - amt, 240 - amt, 240 - amt);
+        return Color.rgb(0, 204 - amt, 204 - amt);
+        //return Color.rgb(240 - amt, 240 - amt, 240 - amt);
     }
 
 
@@ -88,13 +89,14 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         Dream current = dreams.get(position);
 
         TextView textView = (TextView) convertView.findViewById(R.id.textViewDate);
-        textView.setText(current.readableDate());
+        String[] dateSplit = current.readableDate().split(" ");
+        textView.setText(dateSplit[0] + " " + dateSplit[1]);
 
         TextView shortDesc = (TextView) convertView.findViewById(R.id.textViewDesc);
-        shortDesc.setText(current.shortDesc(30));
+        shortDesc.setText(current.shortDesc(60).replace("\n", " "));
 
         int clampedOffset = (int) (Math.sin(Math.toRadians(position * 30)) * 4);
-        int opposite = (int) (Math.sin(Math.toRadians(position * 30)) * 4) + 6;
+        int opposite = (int) (Math.sin(Math.toRadians(position * 30)) * 4) + 2;
 
         Log.d("offset", "pos:" + position + " clampedOffset:" + clampedOffset);
 

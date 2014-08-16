@@ -27,15 +27,17 @@ public class WelcomeActivity extends Activity {
     @InjectView(R.id.listViewDreams)
     ListView listDreams;
 
+    DreamAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.inject(this);
 
-        DreamAdapter adapter = new DreamAdapter(this);
-        listDreams.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        mAdapter = new DreamAdapter(this);
+        listDreams.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     @OnItemClick(R.id.listViewDreams) void onItemClick(
@@ -48,6 +50,11 @@ public class WelcomeActivity extends Activity {
         String date_string = dream.readableDate();
 
         launchWriteActivity(date_string);
+    }
+
+    protected void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 
     public void launchWriteActivity(String date_string) {

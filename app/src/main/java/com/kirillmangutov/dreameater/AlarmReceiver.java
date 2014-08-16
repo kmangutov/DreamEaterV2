@@ -27,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationCompat.Builder builder;
         builder = new NotificationCompat.Builder(ctx)
                 .setContentTitle("Dream Eater")
-                .setContentText("Log your dream")
+                .setContentText("Log your mDream")
                 .setAutoCancel(true)
                 .setContentIntent(futureIntent);
 

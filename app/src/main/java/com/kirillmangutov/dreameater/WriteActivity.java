@@ -3,7 +3,6 @@ package com.kirillmangutov.dreameater;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -11,21 +10,17 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.kirillmangutov.dreameater.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class WriteActivity extends Activity {
 
     @InjectView(R.id.editTextContents)
-    EditText contents;
+    EditText mContents;
 
     @InjectView(R.id.textViewTitle)
-    TextView title;
+    TextView mTitle;
 
     public static final String EXTRA_DATE_STRING = "EXTRA_DATE_STRING";
-    public Dream dream;
+    public Dream mDream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +32,12 @@ public class WriteActivity extends Activity {
         Intent intent = getIntent();
         String date_string = intent.getStringExtra(EXTRA_DATE_STRING);
 
-        dream = getDream(date_string);
-        contents.setText(dream.contents);
-        title.setText(dream.readableDate());
+        mDream = getDream(date_string);
+        mContents.setText(mDream.contents);
+        mTitle.setText(mDream.readableDate());
+
+        int color = DreamAdapter.grayDelta(Integer.parseInt(mDream.getId() + ""));
+        mTitle.getRootView().setBackgroundColor(color);
     }
 
 
@@ -59,8 +57,8 @@ public class WriteActivity extends Activity {
 
         super.onPause();
 
-        dream.contents = contents.getText().toString();
-        dream.save();
+        mDream.contents = mContents.getText().toString();
+        mDream.save();
     }
 
     @Override

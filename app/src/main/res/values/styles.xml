@@ -9,8 +9,9 @@
 
     <style name="DreamText">
 
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:textColor">#123524</item>
 
     </style>
 
