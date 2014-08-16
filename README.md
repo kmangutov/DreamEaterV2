@@ -7,4 +7,6 @@ Dream Eater reminds and helps write your dreams by prompting you to log them eve
 Writing down your dream every morning will make you better at recalling dreams later.
 
 ![Screenshot1](http://i.imgur.com/N7yDLpF.png)
-![Screenshot2](http://i.imgur.com/p8lvtm9.png)
+
+
+![Screenshot2](http://i.imgur.com/rv7MEzz.png)
