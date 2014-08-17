@@ -43,10 +43,27 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
     }
 
 
+    public static int clampPosition(int position) {
+        return (int) (Math.sin(Math.toRadians(position * 30)) * 4);
+    }
+
     public static int grayDelta(int index) {
+        int r = 0;
+        int g = 0;
+        int b = 0;
+
         int mod = 8;
-        int amt = (4 + index) * mod;
-        return Color.rgb(0, 204 - amt, 204 - amt);
+        int amt = (8 + index) * mod;
+        return Color.rgb(r + amt, g + amt, b + amt);
+        //return Color.rgb(204, 204 - amt, 204 - amt);
+    }
+
+    public static int primaryColor(int position) {
+        return grayDelta(clampPosition(position));
+    }
+
+    public static int secondaryColor(int position) {
+        return grayDelta(clampPosition(position) + 2);
     }
 
 
@@ -68,13 +85,10 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         TextView shortDesc = (TextView) convertView.findViewById(R.id.textViewDesc);
         shortDesc.setText(current.shortDesc(60).replace("\n", " "));
 
-        int clampedOffset = (int) (Math.sin(Math.toRadians(position * 30)) * 4);
-        int opposite = (int) (Math.sin(Math.toRadians(position * 30)) * 4) + 2;
-
-        Log.d("offset", "pos:" + position + " clampedOffset:" + clampedOffset);
-
-        convertView.setBackgroundColor(grayDelta(clampedOffset));
-        textView.setTextColor(grayDelta(opposite));
+        int primary = primaryColor(position);
+        int secondary = secondaryColor(position);
+        convertView.setBackgroundColor(primary);
+        textView.setTextColor(secondary);
 
         return convertView;
     }

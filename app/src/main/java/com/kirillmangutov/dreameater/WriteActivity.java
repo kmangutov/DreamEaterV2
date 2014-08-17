@@ -1,10 +1,12 @@
 package com.kirillmangutov.dreameater;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -40,11 +42,18 @@ public class WriteActivity extends Activity {
         mTitle.setText(mDream.shortDate());
 
         int id = intent.getIntExtra(EXTRA_ITEM_POSITION, 0);
-        int color = DreamAdapter.grayDelta(id);
-        mTitle.getRootView().setBackgroundColor(color);
-        mTitle.setTextColor(DreamAdapter.grayDelta(id + 2));
+
+        int primary = DreamAdapter.primaryColor(id);
+        int secondary = DreamAdapter.secondaryColor(id);
+
+        mTitle.getRootView().setBackgroundColor(primary);
+        mTitle.setTextColor(secondary);
     }
 
+    protected void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(mContents, InputMethodManager.SHOW_IMPLICIT);
+    }
 
     public Dream getDream(String date_string) {
         Dream dream = Dream.get(date_string);
@@ -54,6 +63,13 @@ public class WriteActivity extends Activity {
         }
 
         return dream;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        showKeyboard();
     }
 
     @Override

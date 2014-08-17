@@ -2,11 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".WelcomeActivity" >
 
-    <item
-        android:id="@+id/itemToggleAlarm"
-        android:title="Toggle Alarm"
-        android:icon="@drawable/alarm_clock"
-        android:showAsAction="always|withText"
-        android:checkable="true"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 
 </menu>
