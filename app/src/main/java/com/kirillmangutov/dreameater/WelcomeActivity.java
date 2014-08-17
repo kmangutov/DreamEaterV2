@@ -2,6 +2,7 @@ package com.kirillmangutov.dreameater;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +29,7 @@ public class WelcomeActivity extends Activity {
     ListView listDreams;
 
     DreamAdapter mAdapter;
+    AlarmAdmin mAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,15 @@ public class WelcomeActivity extends Activity {
         mAdapter = new DreamAdapter(this);
         listDreams.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        mAlarm = new AlarmAdmin(this);
+        mAlarm.setAlarm();
+
+
     }
 
-    @OnItemClick(R.id.listViewDreams) void onItemClick(
+    @OnItemClick(R.id.listViewDreams)
+    void onItemClick(
             AdapterView<?> parent,
             View v,
             int position,
@@ -49,7 +57,7 @@ public class WelcomeActivity extends Activity {
         Dream dream = (Dream) parent.getItemAtPosition(position);
         String date_string = dream.readableDate();
 
-        launchWriteActivity(date_string);
+        launchWriteActivity(date_string, position);
     }
 
     protected void onResume() {
@@ -57,11 +65,11 @@ public class WelcomeActivity extends Activity {
         mAdapter.notifyDataSetChanged();
     }
 
-    public void launchWriteActivity(String date_string) {
-
+    public void launchWriteActivity(String date_string, int position) {
         Intent intent = new Intent(WelcomeActivity.this,
                 WriteActivity.class);
         intent.putExtra(WriteActivity.EXTRA_DATE_STRING, date_string);
+        intent.putExtra(WriteActivity.EXTRA_ITEM_POSITION, position);
         startActivity(intent);
     }
 

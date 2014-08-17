@@ -20,29 +20,33 @@ public class WriteActivity extends Activity {
     TextView mTitle;
 
     public static final String EXTRA_DATE_STRING = "EXTRA_DATE_STRING";
+    public static final String EXTRA_ITEM_POSITION = "EXTRA_ITEM_POSITION";
     public Dream mDream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
         ButterKnife.inject(this);
 
         Intent intent = getIntent();
         String date_string = intent.getStringExtra(EXTRA_DATE_STRING);
+        if(date_string == null) {
+            date_string = Dream.getToday().readableDate();
+        }
 
         mDream = getDream(date_string);
         mContents.setText(mDream.contents);
-        mTitle.setText(mDream.readableDate());
+        mTitle.setText(mDream.shortDate());
 
-        int color = DreamAdapter.grayDelta(Integer.parseInt(mDream.getId() + ""));
+        int id = intent.getIntExtra(EXTRA_ITEM_POSITION, 0);
+        int color = DreamAdapter.grayDelta(id);
         mTitle.getRootView().setBackgroundColor(color);
+        mTitle.setTextColor(DreamAdapter.grayDelta(id + 2));
     }
 
 
     public Dream getDream(String date_string) {
-
         Dream dream = Dream.get(date_string);
 
         if(dream == null) {
@@ -54,7 +58,6 @@ public class WriteActivity extends Activity {
 
     @Override
     public void onPause() {
-
         super.onPause();
 
         mDream.contents = mContents.getText().toString();

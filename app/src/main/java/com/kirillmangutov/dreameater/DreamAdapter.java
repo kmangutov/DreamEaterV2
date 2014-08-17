@@ -24,61 +24,35 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
     private List<Dream> dreams = new LinkedList<Dream>();
 
     public DreamAdapter(Context context) {
-
         super(context, R.layout.dream_item);
 
         dreams = Dream.getAll();
-
         //for(int i = 1; i < 20; i++)
-        //    dreams.add(0, getToday(20 - i));
-
+        //    dreams.add(0, Dream.daysAgo(20 - i));
 
         if(!hasToday()) {
-            dreams.add(0, getToday());
+            dreams.add(0, Dream.getToday());
         }
-
 
         addAll(dreams);
     }
 
     private boolean hasToday() {
-        Dream today = getToday();
-
-        for(Dream dream : dreams) {
-
-            if(dream.date_string.equals(today.date_string))
-                return true;
-        }
-        return false;
+        Dream today = Dream.getToday();
+        return Dream.get(today.date_string) != null;
     }
 
-    private Dream getToday() {
-        return getToday(0);
-    }
-
-    private Dream getToday(int deltaDay) {
-        Dream today = new Dream();
-        today.date = new Date();
-        today.date.setDate(today.date.getDate() - deltaDay);
-        today.contents = "";
-        today.date_string = today.readableDate();
-        return today;
-    }
 
     public static int grayDelta(int index) {
-
         int mod = 8;
         int amt = (4 + index) * mod;
         return Color.rgb(0, 204 - amt, 204 - amt);
-        //return Color.rgb(240 - amt, 240 - amt, 240 - amt);
     }
 
 
     public View getView(int position, View convertView, ViewGroup parent) {
-
         LayoutInflater inflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
 
         if(convertView == null) {
 
@@ -89,8 +63,7 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         Dream current = dreams.get(position);
 
         TextView textView = (TextView) convertView.findViewById(R.id.textViewDate);
-        String[] dateSplit = current.readableDate().split(" ");
-        textView.setText(dateSplit[0] + " " + dateSplit[1]);
+        textView.setText(current.shortDate());
 
         TextView shortDesc = (TextView) convertView.findViewById(R.id.textViewDesc);
         shortDesc.setText(current.shortDesc(60).replace("\n", " "));
