@@ -82,8 +82,6 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         TextView textView = (TextView) convertView.findViewById(R.id.textViewDate);
         textView.setText(current.shortDate());
 
-        TextView shortDesc = (TextView) convertView.findViewById(R.id.textViewDesc);
-        shortDesc.setText(current.shortDesc(60).replace("\n", " "));
 
         int primary = primaryColor(position);
         int secondary = secondaryColor(position);

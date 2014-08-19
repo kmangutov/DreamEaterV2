@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 /**
  * Created by kirillmangutov on 7/20/14.
@@ -25,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     protected void installNotification(Context ctx) {
-        Intent notifyIntent = new Intent(ctx, WriteActivity.class);
+        Intent notifyIntent = new Intent(ctx, WriteFragment.class);
         PendingIntent futureIntent =
                 PendingIntent.getActivity(ctx, 0, notifyIntent,  0);
 

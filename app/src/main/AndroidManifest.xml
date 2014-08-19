@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".ListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
             android:value="1" />
 
         <activity
-            android:name=".WriteActivity"
+            android:name=".WriteFragment"
             android:label="@string/title_activity_write" >
         </activity>
     </application>
