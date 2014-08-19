@@ -41,6 +41,9 @@ public class WriteFragment extends Fragment {
         mBase.start = start;
         mBase.end = end;
 
+        mTitle.setTranslationX(end.absTextX);
+        mTitle.setTranslationY(end.absTextY);
+
         return view;
     }
 

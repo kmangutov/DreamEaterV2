@@ -2,6 +2,7 @@ package com.kirillmangutov.dreameater;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import android.support.v4.app.FragmentActivity;
@@ -67,6 +68,15 @@ public class ListActivity extends FragmentActivity {
         AnimationGoal end = new AnimationGoal();
         end.y = 0;
         end.h = listDreams.getHeight();
+
+        int[] coords = new int[2];
+        int[] parentCoords = new int[2];
+
+        view.findViewById(R.id.textViewDate).getLocationInWindow(coords);
+        listDreams.getLocationInWindow(parentCoords);
+
+        end.absTextX = coords[0] - parentCoords[0];
+        end.absTextY = coords[1] - parentCoords[1];
 
         Bundle bundle = new Bundle();
         bundle.putString(WriteFragment.EXTRA_DATE_STRING, date_string);

@@ -45,15 +45,20 @@ public class GrowFrameLayout extends RelativeLayout {
         setTranslationY(newY);
 
 
-        //ViewGroup.LayoutParams params = getLayoutParams();
+        /*FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+                getRootView().getWidth(),
+                (int)newH
+        );
         //params.height = (int)newH;
         //params.width = getRootView().getWidth();
-        //setLayoutParams(params);
+        setLayoutParams(params);
+        this.setMinimumHeight((int)newH);*/
 
         //setScaleY( (end.y/start.y) * fraction );
 
+        //this.setPadding(0, 0, 0, -1 * (int)newH);
         resizeView(this, this.getRootView().getWidth(), (int)newH);
-        invalidate();
+        //invalidate();
 
         Log.d("ANIMATION", "x:" + getX() + "\t\ty:" + getY());
         Log.d("ANIMATION", "w:" + getWidth() + "\t\th:" + getHeight() + "\t\tnewH:" + newH);
