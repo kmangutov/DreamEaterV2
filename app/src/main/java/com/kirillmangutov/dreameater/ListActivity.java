@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.AnimationSet;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -37,6 +38,7 @@ public class ListActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_list);
         ButterKnife.inject(this);
 
@@ -47,9 +49,10 @@ public class ListActivity extends FragmentActivity {
         mAlarm = new AlarmAdmin(this);
         mAlarm.setAlarm();
 
+
     }
 
-    public void launchWriteActivity(View view, String date_string, int position) {
+    public void launchWriteActivity(String date_string, int position) {
         /*Intent intent = new Intent(WelcomeActivity.this,
                 WriteActivity.class);
         intent.putExtra(WriteActivity.EXTRA_DATE_STRING, date_string);
@@ -100,12 +103,26 @@ public class ListActivity extends FragmentActivity {
         Dream dream = (Dream) parent.getItemAtPosition(position);
         String date_string = dream.readableDate();
 
-        launchWriteActivity(v, date_string, position);
+        launchWriteActivity(date_string, position);
     }
 
     protected void onResume() {
         super.onResume();
         mAdapter.notifyDataSetChanged();
+
+        Log.d("ALARM", getIntent() + ",TODAY:" + getIntent().getBooleanExtra("TODAY", false));
+        if(getIntent().getBooleanExtra("TODAY", false)) {
+            Log.d("ALARM", "onResume() inside if statement");
+
+            final ViewTreeObserver observer = listDreams.getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    launchWriteActivity(Dream.getToday().readableDate(), mAdapter.getCount());
+                    listDreams.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                }
+            });
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -13,7 +14,7 @@ import java.util.Calendar;
  */
 public class AlarmAdmin {
 
-    boolean debug = false;
+    boolean debug = true;
 
     public static final int REQUEST_CODE = 1;
 
@@ -38,12 +39,14 @@ public class AlarmAdmin {
             c.set(Calendar.HOUR_OF_DAY, 6);
             c.set(Calendar.MINUTE, 0);
             c.set(Calendar.SECOND, 0);
+            c.set(Calendar.DATE, c.get(Calendar.DATE) + 1);
+            Log.d("ALARM", "Date: " + c.get(Calendar.DATE));
         }
 
         return c;
     }
 
-    public PendingIntent getPendingIntent() {
+    public PendingIntent getPendingIntent(int flag) {
 
         Intent intent = new Intent(AlarmReceiver.INTENT_RECORD_DREAM);
         PendingIntent pIntent =
@@ -51,7 +54,7 @@ public class AlarmAdmin {
                         mContext,
                         REQUEST_CODE,
                         intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
+                        flag);
 
         return pIntent;
     }
@@ -63,20 +66,23 @@ public class AlarmAdmin {
                     AlarmManager.RTC_WAKEUP,
                     getMorning().getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY,
-                    getPendingIntent()
+                    getPendingIntent(PendingIntent.FLAG_UPDATE_CURRENT)
             );
         } else {
             mAlarmManager.set(
                     AlarmManager.RTC_WAKEUP,
                     getMorning().getTimeInMillis(),
-                    getPendingIntent()
+                    getPendingIntent(PendingIntent.FLAG_UPDATE_CURRENT)
             );
         }
+    }
 
+    public boolean existsAlarm() {
+        return getPendingIntent(PendingIntent.FLAG_UPDATE_CURRENT) != null;
     }
 
     public void cancelAlarm() {
-        mAlarmManager.cancel(getPendingIntent());
+        mAlarmManager.cancel(getPendingIntent(PendingIntent.FLAG_CANCEL_CURRENT));
     }
 }
 

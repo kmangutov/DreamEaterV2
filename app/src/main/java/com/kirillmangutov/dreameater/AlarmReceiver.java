@@ -24,7 +24,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     protected void installNotification(Context ctx) {
-        Intent notifyIntent = new Intent(ctx, WriteFragment.class);
+        Intent notifyIntent = new Intent(ctx, ListActivity.class);
+        notifyIntent.putExtra("TODAY", true);
+
         PendingIntent futureIntent =
                 PendingIntent.getActivity(ctx, 0, notifyIntent,  0);
 
