@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import java.lang.reflect.Constructor;
@@ -13,12 +14,13 @@ import java.lang.reflect.Constructor;
 /**
  * Created by kmangutov on 8/18/14.
  */
-public class GrowFrameLayout extends RelativeLayout {
+public class GrowFrameLayout extends LinearLayout {
 
     public AnimationGoal start;
     public AnimationGoal end;
 
     private float mGrowFraction = 0;
+    public AnimationFinish listener;
 
     public GrowFrameLayout(Context ctx) {
         super(ctx);
@@ -43,25 +45,14 @@ public class GrowFrameLayout extends RelativeLayout {
         float newH = start.h + (end.h - start.h) * fraction;
 
         setTranslationY(newY);
-
-
-        /*FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                getRootView().getWidth(),
-                (int)newH
-        );
-        //params.height = (int)newH;
-        //params.width = getRootView().getWidth();
-        setLayoutParams(params);
-        this.setMinimumHeight((int)newH);*/
-
-        //setScaleY( (end.y/start.y) * fraction );
-
-        //this.setPadding(0, 0, 0, -1 * (int)newH);
         resizeView(this, this.getRootView().getWidth(), (int)newH);
-        //invalidate();
 
         Log.d("ANIMATION", "x:" + getX() + "\t\ty:" + getY());
         Log.d("ANIMATION", "w:" + getWidth() + "\t\th:" + getHeight() + "\t\tnewH:" + newH);
+
+        if(fraction == 1 && listener != null) {
+            listener.animationFinish();
+        }
     }
 
     public float getGrowFraction() {

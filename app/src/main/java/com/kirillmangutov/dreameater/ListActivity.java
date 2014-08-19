@@ -47,7 +47,6 @@ public class ListActivity extends FragmentActivity {
         mAlarm = new AlarmAdmin(this);
         mAlarm.setAlarm();
 
-
     }
 
     public void launchWriteActivity(View view, String date_string, int position) {
@@ -62,21 +61,12 @@ public class ListActivity extends FragmentActivity {
         WriteFragment fragment = new WriteFragment();
 
         AnimationGoal start = new AnimationGoal();
-        start.y = (int)view.getY();
-        start.h = view.getHeight();
+        start.y = listDreams.getHeight();
+        start.h = listDreams.getHeight();
 
         AnimationGoal end = new AnimationGoal();
         end.y = 0;
         end.h = listDreams.getHeight();
-
-        int[] coords = new int[2];
-        int[] parentCoords = new int[2];
-
-        view.findViewById(R.id.textViewDate).getLocationInWindow(coords);
-        listDreams.getLocationInWindow(parentCoords);
-
-        end.absTextX = coords[0] - parentCoords[0];
-        end.absTextY = coords[1] - parentCoords[1];
 
         Bundle bundle = new Bundle();
         bundle.putString(WriteFragment.EXTRA_DATE_STRING, date_string);

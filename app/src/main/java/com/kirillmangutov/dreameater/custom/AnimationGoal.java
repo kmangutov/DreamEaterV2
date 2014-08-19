@@ -9,6 +9,4 @@ public class AnimationGoal implements Serializable
 {
     public int y;
     public int h;
-    public int absTextX;
-    public int absTextY;
 }

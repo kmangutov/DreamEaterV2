@@ -13,7 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by kirillmangutov on 7/5/14.
@@ -78,16 +82,27 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         }
 
         Dream current = dreams.get(position);
-
-        TextView textView = (TextView) convertView.findViewById(R.id.textViewDate);
-        textView.setText(current.shortDate());
-
+        DreamItem item = new DreamItem(convertView);
 
         int primary = primaryColor(position);
         int secondary = secondaryColor(position);
+
         convertView.setBackgroundColor(primary);
-        textView.setTextColor(secondary);
+        item.date.fromDate(current.date);
+        item.date.setFgColor(secondary);
+        item.summary.setText(current.shortDesc(25).replaceAll("\n", ""));
 
         return convertView;
+    }
+
+    public static class DreamItem {
+
+        public DateItem date;
+        @InjectView(R.id.tvSummary) public TextView summary;
+
+        public DreamItem(View v) {
+            ButterKnife.inject(this, v);
+            date = new DateItem(v);
+        }
     }
 }

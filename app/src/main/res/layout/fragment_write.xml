@@ -3,19 +3,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/layoutWriteBase"
+    android:orientation="vertical"
     tools:context="com.kirillmangutov.dreameater.WriteFragment">
 
-    <TextView
+
+    <include layout="@layout/layout_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textViewTitle"
-        style="@style/DreamText.Title"
-        android:textSize="90sp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:layout_gravity="top" />
+        />
 
     <EditText
         android:layout_width="fill_parent"
@@ -28,8 +23,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@+drawable/edittext_bg"
-        android:layout_below="@id/textViewTitle"
         style="@style/DreamText"/>
+
 
 
 </com.kirillmangutov.dreameater.custom.GrowFrameLayout>
