@@ -5,9 +5,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import java.lang.reflect.Constructor;
 
@@ -20,7 +18,7 @@ public class GrowFrameLayout extends LinearLayout {
     public AnimationGoal end;
 
     private float mGrowFraction = 0;
-    public AnimationFinish listener;
+    public AnimationFinishListener listener;
 
     public GrowFrameLayout(Context ctx) {
         super(ctx);

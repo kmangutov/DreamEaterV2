@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Notification">
+
+        <CheckBoxPreference
+            android:key="checkbox_notif_enabled"
+            android:title="Morning Notification Enabled"
+            android:summary="Toggle the morning notification reminding you to log your dream." />
+
+    </PreferenceCategory>
+</PreferenceScreen>

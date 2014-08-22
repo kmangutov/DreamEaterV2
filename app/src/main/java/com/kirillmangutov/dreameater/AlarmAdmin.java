@@ -14,7 +14,7 @@ import java.util.Calendar;
  */
 public class AlarmAdmin {
 
-    boolean debug = true;
+    boolean debug = false;
 
     public static final int REQUEST_CODE = 1;
 

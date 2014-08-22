@@ -6,22 +6,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.kirillmangutov.dreameater.custom.AnimationFinish;
+import com.kirillmangutov.dreameater.custom.AnimationFinishListener;
 import com.kirillmangutov.dreameater.custom.AnimationGoal;
+import com.kirillmangutov.dreameater.custom.DreamChangedListener;
 import com.kirillmangutov.dreameater.custom.GrowFrameLayout;
-
-import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class WriteFragment extends Fragment implements AnimationFinish {
+public class WriteFragment extends Fragment implements AnimationFinishListener {
 
     @InjectView(R.id.editTextContents) EditText mContents;
     @InjectView(R.id.layoutWriteBase) GrowFrameLayout mBase;
@@ -105,6 +101,8 @@ public class WriteFragment extends Fragment implements AnimationFinish {
 
         mDream.contents = mContents.getText().toString();
         mDream.save();
+
+        ((DreamChangedListener)getActivity()).dreamChanged();
     }
 
     @Override

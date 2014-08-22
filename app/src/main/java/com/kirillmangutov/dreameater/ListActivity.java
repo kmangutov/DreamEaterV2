@@ -5,6 +5,8 @@ import android.app.FragmentTransaction;
 import android.graphics.Rect;
 import android.os.Bundle;
 
+import android.preference.PreferenceFragment;
+
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -16,13 +18,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.kirillmangutov.dreameater.custom.AnimationGoal;
+import com.kirillmangutov.dreameater.custom.DreamChangedListener;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
 
 
-public class ListActivity extends FragmentActivity {
+public class ListActivity extends FragmentActivity implements DreamChangedListener {
 
     private static final String TAG = "DreamEater";
 
@@ -106,6 +109,45 @@ public class ListActivity extends FragmentActivity {
         launchWriteActivity(date_string, position);
     }
 
+    public void openPreferences() {
+
+
+
+
+        Log.d("PREF", "Enter openPreferences()");
+
+        PrefFragment fragment = new PrefFragment();
+
+        AnimationGoal start = new AnimationGoal();
+        start.y = listDreams.getHeight();
+        start.h = listDreams.getHeight();
+
+        AnimationGoal end = new AnimationGoal();
+        end.y = 0;
+        end.h = listDreams.getHeight();
+
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable(WriteFragment.EXTRA_ANIM_START, start);
+        bundle.putSerializable(WriteFragment.EXTRA_ANIM_END, end);
+
+        fragment.setArguments(bundle);
+        /*getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment)
+                .commit();*/
+
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.setCustomAnimations(R.anim.grow,
+                R.anim.shrink,
+                R.anim.grow,
+                R.anim.shrink);
+        trans.add(R.id.fragment_container, fragment);
+        trans.addToBackStack(null).commit();
+
+
+    }
+
     protected void onResume() {
         super.onResume();
         mAdapter.notifyDataSetChanged();
@@ -150,8 +192,15 @@ public class ListActivity extends FragmentActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            openPreferences();
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void dreamChanged() {
+        mAdapter.notifyDataSetChanged();
+    }
+
+
 }
