@@ -33,11 +33,15 @@ public class PrefFragment extends Fragment {
     public Dream mDream;
     private boolean mOpening = true;
 
+    private AlarmAdmin mAlarm;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstance) {
         View view = inflater.inflate(R.layout.fragment_pref, container, false);
         ButterKnife.inject(this, view);
+
+        mAlarm = AlarmAdmin.getInstance(getActivity());
 
         Bundle args = getArguments();
         AnimationGoal start = (AnimationGoal) args.getSerializable(EXTRA_ANIM_START);

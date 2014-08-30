@@ -22,8 +22,16 @@ public class AlarmAdmin {
     private Context mContext;
     private AlarmManager mAlarmManager;
 
+    private static AlarmAdmin instance = null;
 
-    public AlarmAdmin(Context ctx) {
+    public static AlarmAdmin getInstance(Context ctx) {
+        if(instance == null) {
+            instance = new AlarmAdmin(ctx);
+        }
+        return instance;
+    }
+
+    protected AlarmAdmin(Context ctx) {
         this.mContext = ctx;
 
         mAlarmManager =

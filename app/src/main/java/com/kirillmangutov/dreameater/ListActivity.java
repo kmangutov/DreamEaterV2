@@ -2,11 +2,13 @@ package com.kirillmangutov.dreameater;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 
 import android.preference.PreferenceFragment;
 
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -16,16 +18,19 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AnimationSet;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kirillmangutov.dreameater.custom.AnimationGoal;
 import com.kirillmangutov.dreameater.custom.DreamChangedListener;
+import com.kirillmangutov.dreameater.custom.PreferencesUpdatedListener;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
 
 
-public class ListActivity extends FragmentActivity implements DreamChangedListener {
+public class ListActivity extends FragmentActivity implements DreamChangedListener,
+        PreferencesUpdatedListener {
 
     private static final String TAG = "DreamEater";
 
@@ -38,6 +43,8 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
     DreamAdapter mAdapter;
     AlarmAdmin mAlarm;
 
+    boolean mPreferencesOpen = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +56,9 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
         listDreams.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
 
-        mAlarm = new AlarmAdmin(this);
-        mAlarm.setAlarm();
+        mAlarm = AlarmAdmin.getInstance(this);
 
-
+        preferencesUpdated();
     }
 
     public void launchWriteActivity(String date_string, int position) {
@@ -111,6 +117,7 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
 
     public void openPreferences() {
 
+        mPreferencesOpen = true;
         Log.d("PREF", "Enter openPreferences()");
 
         PrefFragment fragment = new PrefFragment();
@@ -188,7 +195,7 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings && !mPreferencesOpen) {
             openPreferences();
         }
         return super.onOptionsItemSelected(item);
@@ -200,4 +207,19 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
     }
 
 
+    @Override
+    public void preferencesUpdated() {
+        mPreferencesOpen = false;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean alarm = prefs.getBoolean("checkbox_notif_enabled", true);
+
+        if(alarm) {
+            //Toast.makeText(this, "alarm set up", Toast.LENGTH_SHORT).show();
+            mAlarm.setAlarm();
+        } else {
+            //Toast.makeText(this, "alarm cancelled", Toast.LENGTH_SHORT).show();
+            mAlarm.cancelAlarm();
+        }
+    }
 }
