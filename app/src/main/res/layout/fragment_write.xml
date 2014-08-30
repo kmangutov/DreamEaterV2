@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:id="@+id/layoutWriteBase"
     android:orientation="vertical"
-    tools:context="com.kirillmangutov.dreameater.WriteFragment">
+    tools:context="com.kirillmangutov.dreameater.WriteFragment"
+    android:clickable="true">
 
 
     <include layout="@layout/layout_date"

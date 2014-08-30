@@ -62,12 +62,23 @@ public class DreamAdapter extends ArrayAdapter<Dream> {
         //return Color.rgb(204, 204 - amt, 204 - amt);
     }
 
+    public static int grayDelta2(int index) {
+        int r = 80;
+        int g = 80;
+        int b = 80;
+
+        int mod = 8;
+        int amt = (8 + index) * mod;
+        return Color.rgb(r + amt, g + amt, b + amt);
+        //return Color.rgb(204, 204 - amt, 204 - amt);
+    }
+
     public static int primaryColor(int position) {
         return grayDelta(clampPosition(position));
     }
 
     public static int secondaryColor(int position) {
-        return grayDelta(clampPosition(position) + 2);
+        return grayDelta2(clampPosition(position));
     }
 
 

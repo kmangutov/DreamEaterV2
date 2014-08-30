@@ -111,15 +111,12 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
 
     public void openPreferences() {
 
-
-
-
         Log.d("PREF", "Enter openPreferences()");
 
         PrefFragment fragment = new PrefFragment();
 
         AnimationGoal start = new AnimationGoal();
-        start.y = listDreams.getHeight();
+        start.y = -listDreams.getHeight();
         start.h = listDreams.getHeight();
 
         AnimationGoal end = new AnimationGoal();

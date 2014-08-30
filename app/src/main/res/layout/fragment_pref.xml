@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:id="@+id/layoutPrefBase"
     android:orientation="vertical"
-    tools:context="com.kirillmangutov.dreameater.PrefFragment">
+    tools:context="com.kirillmangutov.dreameater.PrefFragment"
+    android:clickable="true">
 
 
 

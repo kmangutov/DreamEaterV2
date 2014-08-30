@@ -18,6 +18,7 @@ import com.kirillmangutov.dreameater.custom.AnimationFinishListener;
 import com.kirillmangutov.dreameater.custom.AnimationGoal;
 import com.kirillmangutov.dreameater.custom.DreamChangedListener;
 import com.kirillmangutov.dreameater.custom.GrowFrameLayout;
+import com.kirillmangutov.dreameater.custom.PreferencesUpdatedListener;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -51,6 +52,13 @@ public class PrefFragment extends Fragment {
 
     public GrowFrameLayout getLayout() {
         return mBase;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        ((PreferencesUpdatedListener) getActivity()).preferencesUpdated();
     }
 
     @Override
