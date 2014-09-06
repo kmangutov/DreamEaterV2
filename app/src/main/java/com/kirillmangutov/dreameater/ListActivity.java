@@ -44,6 +44,7 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
     AlarmAdmin mAlarm;
 
     boolean mPreferencesOpen = false;
+    boolean mItemOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,10 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
     }
 
     public void launchWriteActivity(String date_string, int position) {
+
+        if(mItemOpen)
+            return;
+        mItemOpen = false;
         /*Intent intent = new Intent(WelcomeActivity.this,
                 WriteActivity.class);
         intent.putExtra(WriteActivity.EXTRA_DATE_STRING, date_string);
@@ -117,6 +122,8 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
 
     public void openPreferences() {
 
+        if(mPreferencesOpen)
+            return;
         mPreferencesOpen = true;
         Log.d("PREF", "Enter openPreferences()");
 
@@ -195,8 +202,12 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings && !mPreferencesOpen) {
-            openPreferences();
+        if (id == R.id.action_settings) {
+
+            if(!mPreferencesOpen)
+                openPreferences();
+            else
+                onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -204,6 +215,7 @@ public class ListActivity extends FragmentActivity implements DreamChangedListen
     @Override
     public void dreamChanged() {
         mAdapter.notifyDataSetChanged();
+        mItemOpen = false;
     }
 
 

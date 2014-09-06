@@ -7,7 +7,8 @@
         <CheckBoxPreference
             android:key="checkbox_notif_enabled"
             android:title="Morning Notification Enabled"
-            android:summary="Toggle the morning notification reminding you to log your dream." />
+            android:summary="Toggle the morning notification reminding you to log your dream."
+            android:defaultValue="true"/>
 
     </PreferenceCategory>
 </PreferenceScreen>
